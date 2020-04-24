@@ -1,4 +1,4 @@
-package com;
+package com.entities;
 
 public class Contact implements Comparable<Contact>{
 
@@ -60,7 +60,7 @@ public class Contact implements Comparable<Contact>{
 
     @Override
     public String toString() {
-        return firstName  + " " + lastName;
+        return firstName + " " + lastName;
     }
 
     @Override

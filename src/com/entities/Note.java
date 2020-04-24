@@ -1,4 +1,4 @@
-package com;
+package com.entities;
 
 public class Note {
 
@@ -16,9 +16,7 @@ public class Note {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
-    }
+    public String getText() { return text; }
 
     public void setText(String text) {
         this.text = text;

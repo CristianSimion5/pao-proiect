@@ -1,6 +1,10 @@
-package com;
+package com.services;
 
+import com.entities.Agenda;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AgendaService {
 
@@ -10,7 +14,8 @@ public class AgendaService {
         this.agendaArrayList = new ArrayList<>();
     }
 
-    public void addAgenda(Agenda agenda) {
+    public void addAgenda(Agenda agenda) throws IOException {
+        AuditService.writeAudit("addAgenda");
         agendaArrayList.add(agenda);
     }
 
@@ -23,7 +28,12 @@ public class AgendaService {
         return null;
     }
 
-    public void printAgendas() {
+    public Iterator<Agenda> getAgendaListIterator() {
+        return agendaArrayList.iterator();
+    }
+
+    public void printAgendas() throws IOException {
+        AuditService.writeAudit("printAgendas");
         for (Agenda agenda : agendaArrayList) {
             System.out.println(agenda.getName());
         }

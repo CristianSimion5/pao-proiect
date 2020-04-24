@@ -1,4 +1,4 @@
-package com;
+package com.entities;
 
 import java.util.GregorianCalendar;
 

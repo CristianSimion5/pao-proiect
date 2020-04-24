@@ -1,9 +1,9 @@
-package com;
+package com.entities;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import com.services.AuditService;
+
+import java.io.IOException;
+import java.util.*;
 
 public class Agenda {
 
@@ -42,7 +42,7 @@ public class Agenda {
 
     public Contact getContact(String firstName, String lastName) {
         Contact searchContact = new Contact(firstName, lastName);
-        Contact ceil  = contacts.ceiling(searchContact);
+        Contact ceil = contacts.ceiling(searchContact);
         Contact floor = contacts.floor(searchContact);
         return ceil == floor? ceil : null;
     }
@@ -59,7 +59,12 @@ public class Agenda {
         contacts.remove(toDel);
     }
 
-    public void printContacts() {
+    public Iterator<Contact> getContactsIterator() {
+        return contacts.iterator();
+    }
+
+    public void printContacts() throws IOException {
+        AuditService.writeAudit("printContacts");
         if (contacts.isEmpty()) {
             System.out.println("No contacts");
         } else {
@@ -90,7 +95,12 @@ public class Agenda {
 
     public void uncheckTodo(int idx) { todoList.get(idx - 1).setDone(false); }
 
-    public void printTodoList() {
+    public Iterator<Todo> getTodosIterator() {
+        return todoList.iterator();
+    }
+
+    public void printTodoList() throws IOException {
+        AuditService.writeAudit("printTodoList");
         if (todoList.isEmpty()) {
             System.out.println("Nothing in the To-Do list");
         } else {
@@ -164,7 +174,12 @@ public class Agenda {
         schedule.remove(toDel);
     }
 
-    public void printSchedule() {
+    public Iterator<ScheduledTask> getScheduleIterator() {
+        return schedule.iterator();
+    }
+
+    public void printSchedule() throws IOException {
+        AuditService.writeAudit("printSchedule");
         if (schedule.isEmpty()) {
             System.out.println("You have nothing on your schedule!");
         } else {
@@ -175,7 +190,8 @@ public class Agenda {
         }
     }
 
-    public void printScheduledTasksBefore(GregorianCalendar date) {
+    public void printScheduledTasksBefore(GregorianCalendar date) throws IOException {
+        AuditService.writeAudit("printScheduledTasksBefore");
         SortedSet<ScheduledTask> beforeDate = schedule.headSet(new ScheduledTask("", date), true);
         System.out.println("Scheduled tasks before " + date.getTime() + ":");
         for (ScheduledTask st : beforeDate) {
@@ -183,7 +199,8 @@ public class Agenda {
         }
     }
 
-    public void printScheduledTasksAfter(GregorianCalendar date) {
+    public void printScheduledTasksAfter(GregorianCalendar date) throws IOException {
+        AuditService.writeAudit("printScheduledTasksAfter");
         SortedSet<ScheduledTask> afterDate = schedule.tailSet(new ScheduledTask("", date), true);
         System.out.println("Scheduled tasks after " + date.getTime() + ":");
         for (ScheduledTask st : afterDate) {
@@ -191,7 +208,8 @@ public class Agenda {
         }
     }
 
-    public void printScheduledTasksInterval(GregorianCalendar date1, GregorianCalendar date2) {
+    public void printScheduledTasksBetween(GregorianCalendar date1, GregorianCalendar date2) throws IOException {
+        AuditService.writeAudit("printScheduledTasksBetween");
         SortedSet<ScheduledTask> interval = schedule.subSet(new ScheduledTask("", date1), true,
                 new ScheduledTask("", date2), true);
         System.out.println("Scheduled tasks between " + date1.getTime() + " and " + date2.getTime() + ":");
@@ -203,6 +221,8 @@ public class Agenda {
     /**
      * Notes related methods
      */
+
+    public void addNote(Note note) { notes.add(note); }
 
     public void addNote(String title) { notes.add(new Note(title)); }
 
@@ -223,7 +243,12 @@ public class Agenda {
         notes.removeIf(note -> note.getTitle().equals(title));
     }
 
-    public void printNotes() {
+    public Iterator<Note> getNotesIterator() {
+        return notes.iterator();
+    }
+
+    public void printNotes() throws IOException {
+        AuditService.writeAudit("printNotes");
         if (notes.isEmpty()) {
             System.out.println("You have no notes");
         } else {
@@ -240,7 +265,8 @@ public class Agenda {
      * Secure (password protected) related methods
      */
 
-    public Privacy getSecure() {
+    public Privacy getSecure() throws IOException {
+        AuditService.writeAudit("getSecure");
         return secure;
     }
 }
