@@ -2,6 +2,29 @@
 ## Simion Cristian
 Am ales sa implementez o agenda personala.
  
+## Update - Etapa 2
+Am adaugat clase de serviciu de tip Singleton pentru a citi si a salva date cu ajutorul fișierelor CSV. Fiecare obiect ce trebuie salvat in agenda are o clasa IO (input-output) asociata:
+* **Contact** - *ContactIO*
+* **Todo** - *TodoIO*
+* **ScheduledTask** (si **ScheduledTaskMeeting**) - *ScheduledTaskIO*
+* **Note** - *NoteIO*
+* **Privacy** - *PrivacyIO*
+
+Fiecare serviciu IO are doua metode: **loadData**, **saveData**:
+1. **loadData** citeste linie cu linie fisierul CSV dat, apoi imparte campurile unui rand dupa "," si creeaza obiecte cu tipul de date asociat folosind datele citite.
+2. **saveData** transforma obiectele din agenda de acelasi tip in randuri al fisierului CSV
+
+* Fisierele CSV sunt salvate in `/data`.  
+* In cazul NoteIO si PrivacyIO, care pot contine text cu multe randuri, fisierele CSV contin calea catre un alt fisier in care se salveaza textul dintr-o notita / un jurnal.  
+* Notitele se gasesc in `/data/notes` si au ca titlu campul `title` al obiectului **Note** asociat.  
+* Jurnalele se gasesc in `/data/private` si au ca titlu numele agendei de care apartin, fara extensie. (nu am aplicat nicio metoda de criptare asupra fisierelor deoarece nu reprezinta scopul proiectelui)
+* Mai exista clasa **HelpService**, care momentan contine doar doua functii simple pentru a simplifica tratarea valorilor **null** in scrierea fisierelor.
+
+### Audit
+Am adaugat clasa **AuditService**, ce nu trebuie instantiata si are o singura metoda **writeAudit**. Aceasta primeste un String, ce ar trebui sa fie numele unei functii, si scrie in fisierul `Audit.csv` acest String, alaturi de data scrierii (aproximativ egala cu data apelarii functiei) acelui rand. 
+
+Metoda **writeAudit** este apelata in cateva functii cum ar fi: **addAgenda**, **printAgendas**, **printSchedule**, **getSecure**. 
+
 ## Descrierea sistemului
 In cadrul sistemului am folosit urmatoarele clase:
 1. Agenda
@@ -35,7 +58,8 @@ In cadrul sistemului am folosit urmatoarele clase:
 5. Sectiunea privata (**Privacy**) are o parola* ce permite deblocarea sectiunii pentru a accesa campul `journal`.<br>
 Functia **requestAccess()** cere tastarea parolei din nou si in cazul in care este egala cu parola setata, intoarce **true**, in caz contrar, afiseaza un mesaj si intoarce **false**<br> 
 Functiile **lock()** si **unlock()** blocheaza, respectiv deblocheaza accesul la campul `journal`.
-\*Nu am putut implementa introducerea de la tastatura cu mascare a tastelor, deoarece este nevoie de o consola dedicata, nu cea din IDE.
+
+    *Nu am putut implementa introducerea de la tastatura cu mascare a tastelor, deoarece este nevoie de o consola dedicata, nu cea din IDE.
 6. **ScheduledTask** contine numele sarcinii si data asociata acelei sarcini, de asemenea implementeaza interfata **Comparator<>** prin compararea datelor.
 7. **ScheduledTaskMeeting** extinde clasa **ScheduledTask**, adaugand un camp `partner` de tip **Contact** pentru a fi contactata rapid.
 8. O sarcina To Do (**Todo**) are un nume si un flag ce semnaleaza daca sarcina este finalizata sau nu.
