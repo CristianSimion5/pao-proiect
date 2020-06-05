@@ -64,7 +64,7 @@ public class Agenda {
     }
 
     public void printContacts() throws IOException {
-        AuditService.writeAudit("printContacts");
+        AuditService.writeAudit("printContacts", Thread.currentThread().getName());
         if (contacts.isEmpty()) {
             System.out.println("No contacts");
         } else {
@@ -100,7 +100,7 @@ public class Agenda {
     }
 
     public void printTodoList() throws IOException {
-        AuditService.writeAudit("printTodoList");
+        AuditService.writeAudit("printTodoList", Thread.currentThread().getName());
         if (todoList.isEmpty()) {
             System.out.println("Nothing in the To-Do list");
         } else {
@@ -179,7 +179,7 @@ public class Agenda {
     }
 
     public void printSchedule() throws IOException {
-        AuditService.writeAudit("printSchedule");
+        AuditService.writeAudit("printSchedule", Thread.currentThread().getName());
         if (schedule.isEmpty()) {
             System.out.println("You have nothing on your schedule!");
         } else {
@@ -191,7 +191,7 @@ public class Agenda {
     }
 
     public void printScheduledTasksBefore(GregorianCalendar date) throws IOException {
-        AuditService.writeAudit("printScheduledTasksBefore");
+        AuditService.writeAudit("printScheduledTasksBefore", Thread.currentThread().getName());
         SortedSet<ScheduledTask> beforeDate = schedule.headSet(new ScheduledTask("", date), true);
         System.out.println("Scheduled tasks before " + date.getTime() + ":");
         for (ScheduledTask st : beforeDate) {
@@ -200,7 +200,7 @@ public class Agenda {
     }
 
     public void printScheduledTasksAfter(GregorianCalendar date) throws IOException {
-        AuditService.writeAudit("printScheduledTasksAfter");
+        AuditService.writeAudit("printScheduledTasksAfter", Thread.currentThread().getName());
         SortedSet<ScheduledTask> afterDate = schedule.tailSet(new ScheduledTask("", date), true);
         System.out.println("Scheduled tasks after " + date.getTime() + ":");
         for (ScheduledTask st : afterDate) {
@@ -209,7 +209,7 @@ public class Agenda {
     }
 
     public void printScheduledTasksBetween(GregorianCalendar date1, GregorianCalendar date2) throws IOException {
-        AuditService.writeAudit("printScheduledTasksBetween");
+        AuditService.writeAudit("printScheduledTasksBetween", Thread.currentThread().getName());
         SortedSet<ScheduledTask> interval = schedule.subSet(new ScheduledTask("", date1), true,
                 new ScheduledTask("", date2), true);
         System.out.println("Scheduled tasks between " + date1.getTime() + " and " + date2.getTime() + ":");
@@ -248,7 +248,7 @@ public class Agenda {
     }
 
     public void printNotes() throws IOException {
-        AuditService.writeAudit("printNotes");
+        AuditService.writeAudit("printNotes", Thread.currentThread().getName());
         if (notes.isEmpty()) {
             System.out.println("You have no notes");
         } else {
@@ -266,7 +266,7 @@ public class Agenda {
      */
 
     public Privacy getSecure() throws IOException {
-        AuditService.writeAudit("getSecure");
+        AuditService.writeAudit("getSecure", Thread.currentThread().getName());
         return secure;
     }
 }

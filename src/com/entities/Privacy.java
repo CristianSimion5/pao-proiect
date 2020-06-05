@@ -17,7 +17,7 @@ public class Privacy {
     }
 
     private boolean requestAccess() throws IOException {
-        AuditService.writeAudit("requestAccess");
+        AuditService.writeAudit("requestAccess", Thread.currentThread().getName());
         System.out.println("Enter the password to your agenda:");
         String checkPass = sc.nextLine();
         if (password.equals(checkPass)) {

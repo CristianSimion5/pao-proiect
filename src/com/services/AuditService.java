@@ -11,10 +11,12 @@ public class AuditService {
 
     private AuditService() {}
 
-    public static void writeAudit(String functionName) throws IOException {
+    public static void writeAudit(String functionName, String threadName) {
         try (BufferedWriter out = new BufferedWriter(new FileWriter("Audit.csv", true))) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            out.append(functionName).append(",").append(dateFormat.format(new Date())).append('\n');
+            out.append(functionName).append(",").append(dateFormat.format(new Date())).append(",").append(threadName).append('\n');
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

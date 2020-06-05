@@ -15,7 +15,7 @@ public class AgendaService {
     }
 
     public void addAgenda(Agenda agenda) throws IOException {
-        AuditService.writeAudit("addAgenda");
+        AuditService.writeAudit("addAgenda", Thread.currentThread().getName());
         agendaArrayList.add(agenda);
     }
 
@@ -33,7 +33,7 @@ public class AgendaService {
     }
 
     public void printAgendas() throws IOException {
-        AuditService.writeAudit("printAgendas");
+        AuditService.writeAudit("printAgendas", Thread.currentThread().getName());
         for (Agenda agenda : agendaArrayList) {
             System.out.println(agenda.getName());
         }
