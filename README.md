@@ -1,7 +1,26 @@
 # Proiect Programare Avansata pe Obiecte
 ## Simion Cristian
 Am ales sa implementez o agenda personala.
- 
+
+## Update - Etapa 3
+### Baze de date
+Am adaugat clase de serviciu pentru lucrul cu bazele de date. Am folosit *MySQL*. Tabelele au fost adaptate dupa clasele definite in Etapa 1. Fiecare obiect ce trebuie salvat in agenda are o clasa DB asociata:
+* **Agenda** - *AgendaDB*
+* **Contact** - *ContactDB*
+* **Todo** - *TodoDB*
+* **ScheduledTask** (si **ScheduledTaskMeeting**) - *ScheduledTaskDB*
+* **Note** - *NoteDB*
+* **Privacy** - *PrivacyDB*
+
+De asemenea, clasa **General** realizeaza conexiunea initiala.  
+Fiecare clasa DB are metode de afisare, inserare, stergere si prelucrare - redenumirea unei intrari si/sau fie modificarea in totalitate a unei linii. Pentru lucrul cu interfata grafica, am creat si functii care intorc un vector de intrari din tabelul asociat.
+
+### Interfata grafica
+Pentru GUI am folosit *Swing*. Interfata are 6 tab-uri - cate unul pentru fiecare clasa ce retine date. Am implementat doar functii de afisare pentru 5 dintre ele. In afara de afisarea numelor agendelor, celelalte functii necesita selectarea unei agende din lista pentru care sa afiseze datele asociate.
+
+### Audit
+Am modificat functia de scriere in `Audit.csv` astfel incat sa primeasca drept argument numele thread-ului si am actualizat apelurile facute.
+
 ## Update - Etapa 2
 Am adaugat clase de serviciu de tip Singleton pentru a citi si a salva date cu ajutorul fișierelor CSV. Fiecare obiect ce trebuie salvat in agenda are o clasa IO (input-output) asociata:
 * **Contact** - *ContactIO*
